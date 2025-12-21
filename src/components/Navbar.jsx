@@ -74,6 +74,7 @@ const Navbar = () => {
                     user?.photoURL ||
                     "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                   }
+                  referrerPolicy="no-referrer"
                 />
               </div>
             </div>
