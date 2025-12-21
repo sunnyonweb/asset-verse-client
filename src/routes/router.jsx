@@ -18,18 +18,8 @@ import MyEmployeeList from "../pages/Dashboard/HR/MyEmployeeList";
 import RequestAsset from "../pages/Dashboard/Employee/RequestAsset";
 import MyAssets from "../pages/Dashboard/Employee/MyAssets";
 
-// --- Placeholder Components (যে পেজগুলো এখনো বানানো হয়নি) ---
-// আমরা পরের ধাপে Profile এবং MyTeam বানাবো
-const MyTeam = () => (
-  <div className="p-10 text-2xl font-bold text-gray-500">
-    My Team Page (Coming Soon...)
-  </div>
-);
-const Profile = () => (
-  <div className="p-10 text-2xl font-bold text-gray-500">
-    Profile Page (Coming Soon...)
-  </div>
-);
+import MyTeam from "../pages/Dashboard/Employee/MyTeam";
+import Profile from "../pages/Dashboard/Shared/Profile";
 
 export const router = createBrowserRouter([
   // Public Routes
@@ -56,7 +46,7 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // Dashboard Routes (Protected)
+  // Dashboard Routes
   {
     path: "/dashboard",
     element: (
