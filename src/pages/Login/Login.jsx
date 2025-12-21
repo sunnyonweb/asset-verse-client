@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { FaGoogle, FaEnvelope, FaLock } from "react-icons/fa";
+import axios from "axios";
 
 const Login = () => {
   const {
@@ -42,19 +43,50 @@ const Login = () => {
       });
   };
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     setProcessing(true);
-    googleSignIn()
-      .then((result) => {
-        navigate(from, { replace: true });
-        setProcessing(false);
-      })
-      .catch((error) => {
-        setProcessing(false);
-        console.error(error);
-      });
-  };
+    try {
+      // 1. Firebase Login
+      const result = await googleSignIn();
+      const loggedUser = result.user;
 
+      // 2. Check if user exists in Database
+      // Note: Public axios request use koro karon user ekhono login complete koreni DB te
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/${loggedUser.email}`
+      );
+
+      if (data?.role) {
+        // Scenario A: User Exists -> Navigate to Dashboard
+        Swal.fire({
+          title: "Login Successful",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        navigate(from, { replace: true });
+      } else {
+        // Scenario B: New User -> Navigate to Role Selection Page
+        // We pass user info to pre-fill the next forms if needed
+        navigate("/select-role", {
+          state: {
+            email: loggedUser.email,
+            name: loggedUser.displayName,
+            photo: loggedUser.photoURL,
+          },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: error.message,
+      });
+    } finally {
+      setProcessing(false);
+    }
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 p-4">
       <div className="card lg:card-side bg-base-100 shadow-2xl max-w-4xl w-full overflow-hidden">
