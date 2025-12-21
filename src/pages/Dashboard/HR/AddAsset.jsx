@@ -19,23 +19,20 @@ const AddAsset = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      // 1. Upload Image
       const imageFile = data.productImage[0];
       const imageURL = await imageUpload(imageFile);
 
-      // 2. Prepare Data
       const assetData = {
         productName: data.productName,
         productImage: imageURL,
-        productType: data.productType, // Returnable / Non-returnable
+        productType: data.productType,
         productQuantity: parseInt(data.productQuantity),
-        companyName: user?.displayName, // Assuming HR name is company owner for now, or fetch from DB user info
-        // Better approach: We will handle companyName in backend from HR email or user context if saved
-        // For now, let's send HR Email, backend will handle query
+        availableQuantity: parseInt(data.productQuantity),
         hrEmail: user?.email,
+        companyName: user?.displayName, // Or fetch from DB context
+        dateAdded: new Date(),
       };
 
-      // 3. Post to Backend
       const res = await axiosSecure.post("/assets", assetData);
 
       if (res.data.insertedId) {
@@ -48,7 +45,6 @@ const AddAsset = () => {
         });
       }
     } catch (error) {
-      console.error(error);
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -67,24 +63,33 @@ const AddAsset = () => {
         {/* Product Name */}
         <div className="form-control">
           <label className="label">
-            <span className="label-text font-bold">Product Name</span>
+            <span className="label-text font-bold">Product Name *</span>
           </label>
           <input
             type="text"
-            {...register("productName", { required: true })}
+            {...register("productName", {
+              required: "Product name is required",
+            })}
             placeholder="e.g. Macbook Pro M2"
-            className="input input-bordered w-full"
+            className={`input input-bordered w-full ${
+              errors.productName ? "input-error" : ""
+            }`}
           />
+          {errors.productName && (
+            <span className="text-red-500 text-xs mt-1">
+              {errors.productName.message}
+            </span>
+          )}
         </div>
 
         <div className="flex gap-6 flex-col md:flex-row">
           {/* Product Type */}
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text font-bold">Product Type</span>
+              <span className="label-text font-bold">Product Type *</span>
             </label>
             <select
-              {...register("productType", { required: true })}
+              {...register("productType", { required: "Please select a type" })}
               className="select select-bordered w-full"
             >
               <option value="Returnable">Returnable</option>
@@ -95,30 +100,46 @@ const AddAsset = () => {
           {/* Quantity */}
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text font-bold">Product Quantity</span>
+              <span className="label-text font-bold">Quantity *</span>
             </label>
             <input
               type="number"
-              {...register("productQuantity", { required: true, min: 1 })}
+              {...register("productQuantity", {
+                required: "Quantity is required",
+                min: { value: 1, message: "Min 1" },
+              })}
               placeholder="10"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${
+                errors.productQuantity ? "input-error" : ""
+              }`}
             />
+            {errors.productQuantity && (
+              <span className="text-red-500 text-xs mt-1">
+                {errors.productQuantity.message}
+              </span>
+            )}
           </div>
         </div>
 
         {/* Image Upload */}
         <div className="form-control">
           <label className="label">
-            <span className="label-text font-bold">Product Image</span>
+            <span className="label-text font-bold">Product Image *</span>
           </label>
           <input
             type="file"
-            {...register("productImage", { required: true })}
-            className="file-input file-input-bordered w-full"
+            {...register("productImage", { required: "Image is required" })}
+            className={`file-input file-input-bordered w-full ${
+              errors.productImage ? "input-error" : ""
+            }`}
           />
+          {errors.productImage && (
+            <span className="text-red-500 text-xs mt-1">
+              {errors.productImage.message}
+            </span>
+          )}
         </div>
 
-        {/* Submit Button */}
         <button
           disabled={loading}
           className="btn btn-primary w-full text-white mt-4"

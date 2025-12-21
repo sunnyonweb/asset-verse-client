@@ -20,6 +20,7 @@ import MyAssets from "../pages/Dashboard/Employee/MyAssets";
 
 import MyTeam from "../pages/Dashboard/Employee/MyTeam";
 import Profile from "../pages/Dashboard/Shared/Profile";
+import SelectRole from "../pages/Register/SelectRole";
 
 export const router = createBrowserRouter([
   // Public Routes
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "/join-hr",
         element: <JoinHR />,
+      },
+      {
+        path: "/select-role",
+        element: <SelectRole />,
       },
     ],
   },

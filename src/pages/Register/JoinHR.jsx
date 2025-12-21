@@ -1,18 +1,25 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { imageUpload } from "../../utils/imageUpload";
 
 const JoinHR = () => {
+  const location = useLocation();
+  const { email, name, photo } = location.state || {};
+  const isGoogleLogin = !!email;
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: { name: name || "", email: email || "" },
+  });
+
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
   const [processing, setProcessing] = useState(false);
@@ -23,8 +30,12 @@ const JoinHR = () => {
       const imageFile = data.companyLogo[0];
       const logoURL = await imageUpload(imageFile);
 
-      const result = await createUser(data.email, data.password);
-      await updateUserProfile(data.name, logoURL);
+      if (!isGoogleLogin) {
+        await createUser(data.email, data.password);
+        await updateUserProfile(data.name, logoURL);
+      } else {
+        await updateUserProfile(data.name, photo);
+      }
 
       const userInfo = {
         name: data.name,
@@ -46,173 +57,164 @@ const JoinHR = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "HR Manager Account Created!",
-          text: "Please Login to setup your dashboard.",
-          showConfirmButton: true,
+          title: "HR Setup Complete!",
+          showConfirmButton: false,
+          timer: 1500,
         });
-        navigate("/login");
+        navigate("/dashboard/home");
       }
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Registration Failed",
-        text: error.message,
-      });
+      Swal.fire({ icon: "error", title: "Error", text: error.message });
     } finally {
       setProcessing(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center py-10 px-4">
-      <div className="max-w-6xl w-full bg-base-100 shadow-2xl rounded-xl overflow-hidden flex flex-col-reverse lg:flex-row">
-        {/* Form Section */}
-        <div className="lg:w-3/5 p-8 lg:p-12">
-          <div className="mb-8">
-            <span className="badge badge-secondary badge-outline mb-2">
-              For Managers
-            </span>
-            <h2 className="text-4xl font-bold text-gray-800">
-              Start Your Journey
-            </h2>
-            <p className="text-gray-500 mt-2">
-              Create a company profile and manage assets efficiently.
-            </p>
-          </div>
+    <div className="min-h-screen bg-base-200 flex items-center justify-center py-10 px-4">
+      <div className="max-w-2xl w-full bg-white shadow-xl rounded-xl p-8">
+        <h2 className="text-3xl font-bold text-center text-secondary mb-6">
+          {isGoogleLogin ? "Setup Company Profile" : "Register as HR Manager"}
+        </h2>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">Full Name</span>
-                </label>
-                <input
-                  type="text"
-                  {...register("name", { required: true })}
-                  className="input input-bordered"
-                  placeholder="Your Name"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">
-                    Date of Birth
-                  </span>
-                </label>
-                <input
-                  type="date"
-                  {...register("dateOfBirth", { required: true })}
-                  className="input input-bordered"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">Company Name</span>
-                </label>
-                <input
-                  type="text"
-                  {...register("companyName", { required: true })}
-                  className="input input-bordered"
-                  placeholder="Brand Name"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">Company Logo</span>
-                </label>
-                <input
-                  type="file"
-                  {...register("companyLogo", { required: true })}
-                  className="file-input file-input-bordered w-full"
-                />
-              </div>
-            </div>
-
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-semibold">Email Address</span>
+                <span className="label-text font-semibold">Full Name *</span>
               </label>
               <input
-                type="email"
-                {...register("email", { required: true })}
-                className="input input-bordered"
-                placeholder="hr@company.com"
+                type="text"
+                {...register("name", { required: "Name is required" })}
+                className={`input input-bordered ${
+                  errors.name ? "input-error" : ""
+                }`}
               />
+              {errors.name && (
+                <span className="text-red-500 text-xs mt-1">
+                  {errors.name.message}
+                </span>
+              )}
             </div>
-
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-semibold">Password</span>
+                <span className="label-text font-semibold">
+                  Date of Birth *
+                </span>
+              </label>
+              <input
+                type="date"
+                {...register("dateOfBirth", {
+                  required: "Date of Birth is required",
+                })}
+                className={`input input-bordered ${
+                  errors.dateOfBirth ? "input-error" : ""
+                }`}
+              />
+              {errors.dateOfBirth && (
+                <span className="text-red-500 text-xs mt-1">
+                  {errors.dateOfBirth.message}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold">Company Name *</span>
+              </label>
+              <input
+                type="text"
+                {...register("companyName", {
+                  required: "Company Name is required",
+                })}
+                className={`input input-bordered ${
+                  errors.companyName ? "input-error" : ""
+                }`}
+              />
+              {errors.companyName && (
+                <span className="text-red-500 text-xs mt-1">
+                  {errors.companyName.message}
+                </span>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold">Company Logo *</span>
+              </label>
+              <input
+                type="file"
+                {...register("companyLogo", {
+                  required: "Company Logo is required",
+                })}
+                className={`file-input file-input-bordered w-full ${
+                  errors.companyLogo ? "input-error" : ""
+                }`}
+              />
+              {errors.companyLogo && (
+                <span className="text-red-500 text-xs mt-1">
+                  {errors.companyLogo.message}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">Email *</span>
+            </label>
+            <input
+              type="email"
+              {...register("email", { required: "Email is required" })}
+              readOnly={isGoogleLogin}
+              className={`input input-bordered ${
+                isGoogleLogin ? "bg-gray-100" : ""
+              }`}
+            />
+            {errors.email && (
+              <span className="text-red-500 text-xs mt-1">
+                {errors.email.message}
+              </span>
+            )}
+          </div>
+
+          {!isGoogleLogin && (
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold">Password *</span>
               </label>
               <input
                 type="password"
-                {...register("password", { required: true, minLength: 6 })}
-                className="input input-bordered"
-                placeholder="••••••••"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: { value: 6, message: "Min 6 chars" },
+                })}
+                className={`input input-bordered ${
+                  errors.password ? "input-error" : ""
+                }`}
               />
-            </div>
-
-            <button
-              disabled={processing}
-              className="btn btn-secondary w-full text-white text-lg mt-4 shadow-lg"
-            >
-              {processing ? (
-                <span className="loading loading-spinner loading-md"></span>
-              ) : (
-                "Register as HR Manager"
+              {errors.password && (
+                <span className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </span>
               )}
-            </button>
-          </form>
+            </div>
+          )}
 
-          <p className="mt-6 text-center text-sm">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-secondary font-bold hover:underline"
-            >
-              Login here
-            </Link>
-          </p>
-        </div>
-
-        {/* Right Side Info Section */}
-        <div className="lg:w-2/5 bg-secondary text-white flex flex-col justify-between p-10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 rounded-full bg-white opacity-10"></div>
-          <div className="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 rounded-full bg-white opacity-10"></div>
-
-          <div className="z-10">
-            <h3 className="text-3xl font-bold mb-6">Why AssetVerse?</h3>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3">
-                <span className="bg-white text-secondary rounded-full w-6 h-6 flex items-center justify-center font-bold">
-                  ✓
-                </span>
-                Easy Asset Tracking
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="bg-white text-secondary rounded-full w-6 h-6 flex items-center justify-center font-bold">
-                  ✓
-                </span>
-                Employee Management
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="bg-white text-secondary rounded-full w-6 h-6 flex items-center justify-center font-bold">
-                  ✓
-                </span>
-                Automated Reports
-              </li>
-            </ul>
-          </div>
-
-          <div className="mt-10 z-10">
-            <p className="italic opacity-80">
-              "The best solution for managing corporate resources efficiently."
-            </p>
-          </div>
-        </div>
+          <button
+            disabled={processing}
+            className="btn btn-secondary w-full text-white mt-6"
+          >
+            {processing ? (
+              <span className="loading loading-spinner"></span>
+            ) : isGoogleLogin ? (
+              "Complete Setup"
+            ) : (
+              "Register"
+            )}
+          </button>
+        </form>
       </div>
     </div>
   );
