@@ -1,17 +1,21 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
+import Banner from "./Banner";
+import About from "./About";
+import Packages from "./Packages";
+import Testimonials from "./Testimonials";
 
 const Home = () => {
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content text-center">
-        <div className="max-w-md">
-          <h1 className="text-5xl font-bold">Hello there</h1>
-          <p className="py-6">
-            Welcome to AssetVerse - The Ultimate Asset Management Solution.
-          </p>
-          <button className="btn btn-primary">Get Started</button>
-        </div>
-      </div>
+    <div>
+      <Helmet>
+        <title>AssetVerse | Home</title>
+      </Helmet>
+
+      <Banner />
+      <About />
+      <Packages />
+      <Testimonials />
     </div>
   );
 };
