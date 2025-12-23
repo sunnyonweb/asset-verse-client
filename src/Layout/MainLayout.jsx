@@ -12,7 +12,7 @@ const MainLayout = () => {
         <Outlet />
       </div>
 
-      <footer className="footer footer-center p-10 bg-base-300 text-base-content mt-10">
+      <footer className="footer footer-center p-10 bg-base-300 text-base-content ">
         <aside>
           <p className="font-bold">
             AssetVerse Ltd. <br />
@@ -26,4 +26,3 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
-

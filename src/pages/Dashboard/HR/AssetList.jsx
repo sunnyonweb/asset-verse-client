@@ -138,9 +138,11 @@ const AssetList = () => {
                 </td>
                 <td>{new Date(asset.dateAdded).toLocaleDateString()}</td>
                 <td>
-                  <button className="btn btn-ghost btn-xs text-info text-lg">
-                    <FaEdit />
-                  </button>
+                  <Link to={`/dashboard/update-asset/${asset._id}`}>
+                    <button className="btn btn-ghost btn-xs text-info text-lg">
+                      <FaEdit />
+                    </button>
+                  </Link>
                   <button
                     onClick={() => handleDelete(asset._id)}
                     className="btn btn-ghost btn-xs text-error text-lg ml-2"

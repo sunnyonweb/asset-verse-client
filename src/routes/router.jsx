@@ -21,6 +21,7 @@ import MyAssets from "../pages/Dashboard/Employee/MyAssets";
 import MyTeam from "../pages/Dashboard/Employee/MyTeam";
 import Profile from "../pages/Dashboard/Shared/Profile";
 import SelectRole from "../pages/Register/SelectRole";
+import UpdateAsset from "../pages/Dashboard/HR/UpdateAsset";
 
 export const router = createBrowserRouter([
   // Public Routes
@@ -90,6 +91,14 @@ export const router = createBrowserRouter([
         element: (
           <HRRoute>
             <MyEmployeeList />
+          </HRRoute>
+        ),
+      },
+      {
+        path: "update-asset/:id", // Dynamic ID Route
+        element: (
+          <HRRoute>
+            <UpdateAsset />
           </HRRoute>
         ),
       },
