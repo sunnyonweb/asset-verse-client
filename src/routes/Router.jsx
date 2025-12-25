@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
-import Dashboard from "../Layout/Dashboard";
+
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import JoinEmployee from "../pages/Register/JoinEmployee";
@@ -22,6 +22,7 @@ import MyTeam from "../pages/Dashboard/Employee/MyTeam";
 import Profile from "../pages/Dashboard/Shared/Profile";
 import SelectRole from "../pages/Register/SelectRole";
 import UpdateAsset from "../pages/Dashboard/HR/UpdateAsset";
+import Dashboard from "../Layout/Dashboard";
 
 export const router = createBrowserRouter([
   // Public Routes
