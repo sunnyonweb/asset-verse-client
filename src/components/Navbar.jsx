@@ -34,7 +34,6 @@ const Navbar = () => {
         </NavLink>
       </li>
 
-      {/* ইউজার না থাকলে Join অপশন দেখাবে */}
       {!user && (
         <>
           <li>
@@ -60,7 +59,6 @@ const Navbar = () => {
         </>
       )}
 
-      {/* ইউজার থাকলে Dashboard বাটন দেখাবে */}
       {user && (
         <li>
           <NavLink to="/dashboard/home" className="font-bold text-primary">
@@ -128,7 +126,7 @@ const Navbar = () => {
                     user?.photoURL ||
                     "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                   }
-                  referrerPolicy="no-referrer" // Google Image Fix
+                  referrerPolicy="no-referrer"
                 />
               </div>
             </div>

@@ -13,10 +13,9 @@ import useRole from "../hooks/useRole";
 import useAuth from "../hooks/useAuth";
 
 const Dashboard = () => {
-  const [role] = useRole(); // 'hr' or 'employee'
+  const [role] = useRole();
   const { logOut } = useAuth();
 
-  // Professional Styles for Links
   const linkStyle = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 font-medium ${
       isActive
@@ -29,7 +28,7 @@ const Dashboard = () => {
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content flex flex-col bg-base-200 min-h-screen">
-        {/* Mobile Header (Only visible on small screens) */}
+        {/* Mobile Header  */}
         <div className="w-full navbar bg-base-100 lg:hidden shadow-sm">
           <div className="flex-none">
             <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost">

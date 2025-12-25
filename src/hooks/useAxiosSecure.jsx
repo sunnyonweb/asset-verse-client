@@ -1,15 +1,39 @@
 import axios from "axios";
 import { useEffect } from "react";
-import useAuth from "./useAuth"; // আমরা একটু পরেই এটা বানাবো
+import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 
 const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true, // কুকি পাঠানোর জন্য এটা মাস্ট
+  withCredentials: true,
 });
 
 const useAxiosSecure = () => {
-  // এখানে ভবিষ্যতে আমরা ইন্টারসেপ্টর বসাবো (401/403 এরর হ্যান্ডেল করার জন্য)
+  const { logOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const interceptor = axiosSecure.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      async (error) => {
+        const status = error.response ? error.response.status : null;
+
+        if (status === 401 || status === 403) {
+          console.log("Logout due to error", status);
+          await logOut();
+          navigate("/login");
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axiosSecure.interceptors.response.eject(interceptor);
+    };
+  }, [logOut, navigate]);
+
   return axiosSecure;
 };
 

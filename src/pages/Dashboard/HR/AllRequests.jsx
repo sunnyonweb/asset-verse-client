@@ -8,7 +8,6 @@ const AllRequests = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // Fetch Requests related to this HR
   const {
     data: requests = [],
     refetch,

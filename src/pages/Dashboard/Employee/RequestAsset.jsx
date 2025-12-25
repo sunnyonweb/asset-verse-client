@@ -8,15 +8,13 @@ const RequestAsset = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [search, setSearch] = useState("");
-  const [selectedAsset, setSelectedAsset] = useState(null); // For Modal
+  const [selectedAsset, setSelectedAsset] = useState(null);
 
-  // 1. Fetch All Available Assets
-  // (Note: In real app, we might filter assets that have quantity > 0)
   const { data: assets = [], isLoading } = useQuery({
     queryKey: ["assets-public", search],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/assets?search=${search}&limit=100`); // Fetching more for grid
-      return res.data.assets.filter((asset) => asset.productQuantity > 0); // Only show available
+      const res = await axiosSecure.get(`/assets?search=${search}&limit=100`);
+      return res.data.assets.filter((asset) => asset.productQuantity > 0);
     },
   });
 
@@ -32,7 +30,7 @@ const RequestAsset = () => {
       assetType: selectedAsset.productType,
       requesterName: user.displayName,
       requesterEmail: user.email,
-      hrEmail: selectedAsset.hrEmail, // Very Important for HR Dashboard
+      hrEmail: selectedAsset.hrEmail,
       companyName: selectedAsset.companyName,
       note: note,
       requestDate: new Date(),
@@ -124,7 +122,7 @@ const RequestAsset = () => {
         ))}
       </div>
 
-      {/* --- MODAL (DaisyUI) --- */}
+      {/* --- MODAL  --- */}
       <dialog id="request_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
@@ -143,7 +141,6 @@ const RequestAsset = () => {
             ></textarea>
 
             <div className="modal-action">
-              {/* if there is a button in form, it will close the modal */}
               <button
                 type="button"
                 className="btn"

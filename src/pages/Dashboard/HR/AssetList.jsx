@@ -13,16 +13,16 @@ const AssetList = () => {
   const [search, setSearch] = useState("");
   const [filterType, setFilterType] = useState("");
   const [page, setPage] = useState(1);
-  const limit = 10; // Items per page
+  const limit = 10;
 
-  // Fetch Assets using TanStack Query
+  // Fetch Assets
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["assets", user?.email, search, filterType, page],
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/assets?email=${user?.email}&search=${search}&type=${filterType}&page=${page}&limit=${limit}`
       );
-      return res.data; // Returns { assets: [], totalAssets: number, totalPages: number }
+      return res.data; // Returns
     },
   });
 

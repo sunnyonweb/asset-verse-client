@@ -40,7 +40,7 @@ const UpdateAsset = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/dashboard/home"); // Back to list
+        navigate("/dashboard/home");
       }
     } catch (error) {
       Swal.fire({ icon: "error", title: "Error", text: "Update failed" });

@@ -29,7 +29,7 @@ const AddAsset = () => {
         productQuantity: parseInt(data.productQuantity),
         availableQuantity: parseInt(data.productQuantity),
         hrEmail: user?.email,
-        companyName: user?.displayName, // Or fetch from DB context
+        companyName: user?.displayName,
         dateAdded: new Date(),
       };
 

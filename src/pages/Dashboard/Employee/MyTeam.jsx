@@ -9,7 +9,7 @@ const MyTeam = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedHrEmail, setSelectedHrEmail] = useState(null);
 
-  // 1. Fetch My Affiliations (Which companies I belong to)
+  // 1. Fetch My Affiliations
   const { data: affiliations = [], isLoading: loadingAffiliations } = useQuery({
     queryKey: ["my-affiliations", user?.email],
     queryFn: async () => {
@@ -22,10 +22,10 @@ const MyTeam = () => {
     },
   });
 
-  // 2. Fetch Team Members (Based on selected HR)
+  // 2. Fetch Team Members
   const { data: teamMembers = [], isLoading: loadingTeam } = useQuery({
     queryKey: ["team-members", selectedHrEmail],
-    enabled: !!selectedHrEmail, // Only run if HR email is selected
+    enabled: !!selectedHrEmail,
     queryFn: async () => {
       const res = await axiosSecure.get(`/affiliates/${selectedHrEmail}`);
       return res.data;

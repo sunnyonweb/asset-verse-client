@@ -19,7 +19,7 @@ const MyAssets = () => {
     },
   });
 
-  // Filter Logic (Search & Type) on Frontend (since list is small usually)
+  // Filter Logic
   const filteredRequests = requests.filter((req) => {
     const matchesSearch = req.assetName
       .toLowerCase()
@@ -30,7 +30,7 @@ const MyAssets = () => {
     return matchesSearch && matchesFilter;
   });
 
-  // Handle Return Action (Logic can be extended)
+  // Handle Return Action
   const handleReturn = (id) => {
     Swal.fire({
       title: "Return Asset?",
@@ -40,15 +40,9 @@ const MyAssets = () => {
       confirmButtonText: "Yes, Return it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        // In a real app, we would have a PATCH endpoint for 'return'
-        // For now, let's just show a success message or delete request if requirement allows
-        // But typically we update status to 'returned'
-
-        // Assuming we implemented a basic delete or update in backend:
         const res = await axiosSecure.patch(`/requests/${id}`, {
           status: "returned",
         });
-        // Note: You might need to add logic in backend for 'returned' status update
 
         if (res.data.modifiedCount > 0) {
           refetch();

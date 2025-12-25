@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
-import Dashboard from "../layout/Dashboard";
+import Dashboard from "../Layout/Dashboard";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import JoinEmployee from "../pages/Register/JoinEmployee";
@@ -61,9 +61,9 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      // --- HR ROUTES (Protected by HRRoute) ---
+      // --- HR ROUTES  ---
       {
-        path: "home", // HR Default Home (Asset List)
+        path: "home",
         element: (
           <HRRoute>
             <AssetList />
@@ -95,7 +95,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "update-asset/:id", // Dynamic ID Route
+        path: "update-asset/:id",
         element: (
           <HRRoute>
             <UpdateAsset />

@@ -16,7 +16,6 @@ const HRRoute = ({ children }) => {
 
   if (user && role === "hr") return children;
 
-  // HR না হলে লগআউট করিয়ে দেওয়া যেতে পারে বা হোমপেজে পাঠানো যেতে পারে
   return <Navigate to="/" state={{ from: location }} replace></Navigate>;
 };
 export default HRRoute;

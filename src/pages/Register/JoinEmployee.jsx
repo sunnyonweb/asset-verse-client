@@ -136,7 +136,7 @@ const JoinEmployee = () => {
             )}
           </div>
 
-          {/* Password Field (Only for Non-Google) */}
+          {/* Password Field  */}
           {!isGoogleLogin && (
             <div className="form-control">
               <label className="label">

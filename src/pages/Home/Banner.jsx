@@ -6,7 +6,6 @@ import { FaPlayCircle, FaCheckCircle } from "react-icons/fa";
 const Banner = () => {
   return (
     <div className="relative min-h-[95vh] bg-slate-50 overflow-hidden flex items-center">
-      {/* --- 1. ATTRACTIVE BACKGROUND (AURORA EFFECT) --- */}
       {/* Purple Blob */}
       <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-purple-500/30 rounded-full blur-[120px] opacity-70 animate-pulse"></div>
       {/* Blue Blob */}
@@ -23,7 +22,7 @@ const Banner = () => {
 
       <div className="container mx-auto px-4 z-10 relative mt-10 lg:mt-0">
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-          {/* --- LEFT SIDE: TEXT --- */}
+          {/* --- LEFT SIDE --- */}
           <motion.div
             className="lg:w-1/2 text-center lg:text-left space-y-7"
             initial={{ opacity: 0, x: -50 }}
@@ -82,14 +81,14 @@ const Banner = () => {
             </div>
           </motion.div>
 
-          {/* --- RIGHT SIDE: ATTRACTIVE IMAGE COMPOSITION --- */}
+          {/* --- RIGHT SIDE --- */}
           <motion.div
             className="lg:w-1/2 relative"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {/* 1. Main Dashboard Image (Floating) */}
+            {/* 1. Main Dashboard Image  */}
             <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -107,7 +106,7 @@ const Banner = () => {
               </div>
             </motion.div>
 
-            {/* 2. Floating Badge 1 (Asset Count) */}
+            {/* 2. Floating Badge 1 */}
             <motion.div
               animate={{ y: [0, 20, 0], x: [0, 10, 0] }}
               transition={{
@@ -129,7 +128,7 @@ const Banner = () => {
               </div>
             </motion.div>
 
-            {/* 3. Floating Badge 2 (User Active) */}
+            {/* 3. Floating Badge 2  */}
             <motion.div
               animate={{ y: [0, -20, 0] }}
               transition={{

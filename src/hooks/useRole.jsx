@@ -12,8 +12,6 @@ const useRole = () => {
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user.email}`);
 
-      // মেইন ফিক্স: যদি res.data না থাকে বা role না থাকে, তবে null রিটার্ন করো
-      // React Query তে undefined রিটার্ন করা যায় না।
       return res.data?.role || null;
     },
   });

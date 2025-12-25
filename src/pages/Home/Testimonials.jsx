@@ -102,11 +102,10 @@ const Testimonials = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => {
-        // If we reach the end, go back to start
         if (prev >= reviews.length - itemsPerPage) return 0;
         return prev + 1;
       });
-    }, 4000); // Change every 4 seconds
+    }, 4000);
     return () => clearInterval(interval);
   }, [itemsPerPage]);
 
@@ -155,13 +154,13 @@ const Testimonials = () => {
               className="flex gap-6"
               animate={{ x: `-${currentIndex * (100 / itemsPerPage)}%` }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              style={{ width: `${(reviews.length / itemsPerPage) * 100}%` }} // Dynamic width
+              style={{ width: `${(reviews.length / itemsPerPage) * 100}%` }}
             >
               {reviews.map((review) => (
                 <div
                   key={review.id}
-                  className="relative flex-shrink-0 w-full md:w-[48%] lg:w-[32%]" // Width based on logic
-                  style={{ width: `${100 / reviews.length}%` }} // Fallback width calculation
+                  className="relative flex-shrink-0 w-full md:w-[48%] lg:w-[32%]"
+                  style={{ width: `${100 / reviews.length}%` }}
                 >
                   <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 h-full flex flex-col relative group">
                     {/* Quote Icon Background */}
@@ -201,7 +200,7 @@ const Testimonials = () => {
             </motion.div>
           </div>
 
-          {/* Dots Navigation (Optional) */}
+          {/* Dots Navigation  */}
           <div className="flex justify-center gap-2 mt-8">
             {[...Array(reviews.length - itemsPerPage + 1)].map((_, idx) => (
               <button

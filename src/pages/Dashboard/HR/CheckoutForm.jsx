@@ -15,9 +15,8 @@ const CheckoutForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // প্যাকেজ প্রাইস (আপাতত ফিক্সড $10 ধরছি, অথবা প্রপস দিয়ে আনা যাবে)
   const price = 10;
-  const packageLimit = 10; // নতুন লিমিট কত হবে (উদাহরণ: ৫ থেকে বেড়ে ১০ হবে)
+  const packageLimit = 10;
 
   useEffect(() => {
     if (price > 0) {
@@ -73,8 +72,8 @@ const CheckoutForm = () => {
           hrEmail: user.email,
           price: price,
           transactionId: paymentIntent.id,
-          date: new Date(), // Convert to UTC in real app
-          packageName: "Standard", // Example
+          date: new Date(),
+          packageName: "Standard",
           newLimit: packageLimit,
           status: "success",
         };

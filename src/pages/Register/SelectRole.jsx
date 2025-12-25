@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { FaUserTie, FaUsers } from "react-icons/fa";
 
 const SelectRole = () => {
-  // গুগল থেকে পাওয়া ডাটাগুলো এখানে রিসিভ করছি
   const location = useLocation();
   const { email, name, photo } = location.state || {};
 
@@ -35,7 +34,7 @@ const SelectRole = () => {
             <div className="card-actions mt-6">
               <Link
                 to="/join-employee"
-                state={{ email, name }} // ডাটা পাঠিয়ে দিচ্ছি যাতে ফর্ম ফিলাপ করা থাকে
+                state={{ email, name }}
                 className="btn btn-primary text-white w-full"
               >
                 Join as Employee
@@ -55,7 +54,7 @@ const SelectRole = () => {
             <div className="card-actions mt-6">
               <Link
                 to="/join-hr"
-                state={{ email, name }} // ডাটা পাঠিয়ে দিচ্ছি
+                state={{ email, name }}
                 className="btn btn-secondary text-white w-full"
               >
                 Join as HR Manager

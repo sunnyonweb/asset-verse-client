@@ -20,7 +20,7 @@ const Profile = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        // Force reload to update UI immediately or manage state
+
         window.location.reload();
       })
       .catch((error) => {

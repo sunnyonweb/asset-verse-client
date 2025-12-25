@@ -15,12 +15,12 @@ const Login = () => {
   const { signIn, googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const [processing, setProcessing] = useState(false); // Local loading state
+  const [processing, setProcessing] = useState(false);
 
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
-    setProcessing(true); // Start loading
+    setProcessing(true);
     signIn(data.email, data.password)
       .then((result) => {
         Swal.fire({
@@ -34,7 +34,7 @@ const Login = () => {
         setProcessing(false);
       })
       .catch((error) => {
-        setProcessing(false); // Stop loading on error
+        setProcessing(false);
         Swal.fire({
           title: "Login Failed",
           text: error.message,
@@ -46,18 +46,14 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     setProcessing(true);
     try {
-      // 1. Firebase Login
       const result = await googleSignIn();
       const loggedUser = result.user;
 
-      // 2. Check if user exists in Database
-      // Note: Public axios request use koro karon user ekhono login complete koreni DB te
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/users/${loggedUser.email}`
       );
 
       if (data?.role) {
-        // Scenario A: User Exists -> Navigate to Dashboard
         Swal.fire({
           title: "Login Successful",
           icon: "success",
@@ -66,8 +62,6 @@ const Login = () => {
         });
         navigate(from, { replace: true });
       } else {
-        // Scenario B: New User -> Navigate to Role Selection Page
-        // We pass user info to pre-fill the next forms if needed
         navigate("/select-role", {
           state: {
             email: loggedUser.email,
