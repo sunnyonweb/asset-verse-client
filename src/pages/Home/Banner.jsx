@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPlayCircle, FaCheckCircle } from "react-icons/fa";
-import banner from "../banner.webp";
+import banner from "../../assets/banner.webp";
 
 const Banner = () => {
   return (

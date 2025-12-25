@@ -9,9 +9,9 @@ _(Optional: Replace this link with a screenshot of your Home Page)_
 
 ## 🔗 Live Links
 
-- **🔴 Live Site:** [PASTE_YOUR_VERCEL_LIVE_LINK_HERE]
-- **💻 Client Repository:** [PASTE_YOUR_GITHUB_CLIENT_LINK_HERE]
-- **⚙️ Server Repository:** [PASTE_YOUR_GITHUB_SERVER_LINK_HERE]
+- **🔴 Live Site:** [https://asset-verse-client-psi.vercel.app/]
+- **💻 Client Repository:** [https://github.com/sunnyonweb/asset-verse-client.git]
+- **⚙️ Server Repository:** [https://github.com/sunnyonweb/asset-verse-server.git]
 
 ---
 
