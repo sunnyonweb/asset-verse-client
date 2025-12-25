@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPlayCircle, FaCheckCircle } from "react-icons/fa";
+import banner from "../banner.webp";
 
 const Banner = () => {
   return (
@@ -96,7 +97,7 @@ const Banner = () => {
             >
               <div className="bg-white p-2 rounded-2xl shadow-2xl border border-slate-200">
                 <img
-                  src="https://cdn.dribbble.com/users/1615584/screenshots/15710288/media/7b7d0b3c675303c72b2260f89838153c.jpg?compress=1&resize=1000x750&vertical=top"
+                  src={banner}
                   alt="Asset Dashboard UI"
                   className="rounded-xl w-full object-cover"
                 />
