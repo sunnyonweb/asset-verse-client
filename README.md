@@ -1,6 +1,6 @@
 # 🏢 AssetVerse - Corporate Asset Management System
 
-![AssetVerse Banner](https://i.ibb.co.com/mJ9Jky6/assetverse-banner-placeholder.png)
+![AssetVerse Banner](https://i.ibb.co/Tq2p1zMV/banner-assetverce.png)
 _(Optional: Replace this link with a screenshot of your Home Page)_
 
 **AssetVerse** is a comprehensive **B2B (Business-to-Business)** web application designed to streamline asset management for companies. It bridges the gap between HR Managers and Employees, ensuring transparent tracking of returnable and non-returnable assets, managing product inventory, and automating the request-approval flow.
